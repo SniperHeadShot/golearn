@@ -1,4 +1,4 @@
-package util
+package utools
 
 import "strings"
 
@@ -18,9 +18,15 @@ func IsNotEmpty(str *string) bool {
 
 // 数组是否包含元素
 func IsArrContainEle(arr *[]string, str *string) bool {
-	len := len(*arr)
-	for k := 0; k < len; k++ {
-		if (*arr)[k] == *str {
+	if arr == nil {
+		return false
+	}
+	if str == nil {
+		return false
+	}
+
+	for _, strTemp := range *arr {
+		if strTemp == *str {
 			return true
 		}
 	}

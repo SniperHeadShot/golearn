@@ -1,20 +1,14 @@
 package main
 
-import (
-	"fmt"
-	log "github.com/sirupsen/logrus"
-)
-
 func main() {
-	log.WithFields(log.Fields{
-		"name": "zy",
-		"age":  26,
-	}).Info("something occur!")
 
-	test()
 }
 
-func test(s ...string) {
-	len := len(s)
-	fmt.Println(len)
+func outer() func() int {
+	var i = 10
+
+	// 逃逸 i 变量, 使其能被外部访问
+	return func() int {
+		return i + 1
+	}
 }

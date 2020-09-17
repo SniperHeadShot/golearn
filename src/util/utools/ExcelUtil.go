@@ -1,4 +1,4 @@
-package util
+package utools
 
 import (
 	"github.com/tealeg/xlsx"

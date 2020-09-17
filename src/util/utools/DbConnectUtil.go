@@ -1,4 +1,4 @@
-package util
+package utools
 
 import (
 	"database/sql"
@@ -37,30 +37,4 @@ func BuildMysqlDbConnect(connInfo *ConnectInfo) (*sql.DB, interface{}) {
 	// 连接过期时间
 	db.SetConnMaxLifetime(time.Second * 10)
 	return db, nil
-}
-
-// 根据类型获取对应连接
-func BuildDbWithType(dbType, dbName *string) (*sql.DB, interface{}) {
-	if IsEmpty(dbType) || IsEmpty(dbName) {
-		return nil, "dbType or dbName is empty"
-	}
-	// 读取配置
-	var connectInfos []ConnectInfo
-	err := ReadConfigFromFile(&connectInfos)
-	if err != nil {
-		return nil, err
-	}
-	var connectConfig *ConnectInfo
-	// 遍历配置
-	for _, connectInfo := range connectInfos {
-		if *connectInfo.Type == *dbType {
-			connectConfig = &connectInfo
-			break
-		}
-	}
-	if connectConfig == nil {
-		return nil, fmt.Sprintf("invalid dbType %s!", *dbType)
-	}
-	connectConfig.DbName = dbName
-	return BuildMysqlDbConnect(connectConfig)
 }
